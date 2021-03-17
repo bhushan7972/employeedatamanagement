@@ -552,3 +552,10 @@ class RoleMaster(models.Model):
     def __str__(self):
         s = str(self. RoleID )
         return (s)
+
+class CountryMaster(models.Model):
+    CountryID=models.UUIDField()
+    CountryName=models.CharField(max_length=100)
+    Code=models.CharField(max_length=50)
+    CreatedDate=models.DateTimeField()
+    IsActive=models.BooleanField(default=False)
