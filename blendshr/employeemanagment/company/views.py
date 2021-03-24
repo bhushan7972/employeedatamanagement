@@ -12,18 +12,18 @@ from django.http import HttpResponse
 
 # Create your views here.
 @login_required(redirect_field_name='/')
-@user_passes_test(lambda u: u.is_hr, login_url='moderator:index')
+@user_passes_test(lambda u: u.is_company, login_url='moderator:index')
 def companyProfile(request):
-    hr = companyP.objects.get(user=request.user)
+    company = companyP.objects.get(user=request.user)
 
     if request.method == 'POST':
 
-        form = company_profile(request.POST, request.FILES, instance=hr)
+        form = company_profile(request.POST, request.FILES, instance=company)
         if form.is_valid():
             userprofile = form.save(commit=False)
             userprofile.is_active = True
             userprofile.save()
-            return redirect('hr:dashboard')
+            return redirect('company:dashboard')
     else:
         form = company_profile()
 
@@ -31,7 +31,7 @@ def companyProfile(request):
 
 
 @login_required(redirect_field_name='/')
-@user_passes_test(lambda u: u.is_hr, login_url='moderator:index')
+@user_passes_test(lambda u: u.is_company, login_url='moderator:index')
 def dashboard(request):
     section = 'dashboard'
     hr = companyP.objects.all()
@@ -39,19 +39,19 @@ def dashboard(request):
     hr_sales = companyP.objects.filter(department='SALES')
     hr_marketing = companyP.objects.filter(department='MARKETING')
     hr_hr = companyP.objects.filter(department='HR')
-    return render(request, 'hr/dashboard.html', locals())
+    return render(request, 'company/dashboard.html', locals())
 
-
-def sep_dashboard(request, depart):
-    section = 'department'
-    manager = managerP.objects.filter(department=depart)
-    employee = employeeP.objects.filter(department=depart)
-    if depart == 'PRODUCTION':
-        return render(request, 'hr/department/productiondep.html', locals())
-    elif depart == 'MARKETING':
-        return render(request, 'hr/department/marketingdep.html', locals())
-    elif depart == 'SALES':
-        return render(request, 'hr/department/salesdep.html', locals())
-    else:
-        hr = companyP.objects.filter(department=depart)
-        return render(request, 'hr/department/hrdep.html', locals())
+#
+# def sep_dashboard(request, depart):
+#     section = 'department'
+#     manager = managerP.objects.filter(department=depart)
+#     employee = employeeP.objects.filter(department=depart)
+#     if depart == 'PRODUCTION':
+#         return render(request, 'hr/department/productiondep.html', locals())
+#     elif depart == 'MARKETING':
+#         return render(request, 'hr/department/marketingdep.html', locals())
+#     elif depart == 'SALES':
+#         return render(request, 'hr/department/salesdep.html', locals())
+#     else:
+#         hr = companyP.objects.filter(department=depart)
+#         return render(request, 'hr/department/hrdep.html', locals())

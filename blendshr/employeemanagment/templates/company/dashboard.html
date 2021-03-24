@@ -10,7 +10,7 @@
 {% block content %}
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item">HR</li>
+		<li class="breadcrumb-item">company</li>
 		<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
 	</ol>
 </nav>
@@ -27,7 +27,7 @@
     </tr>
   </thead>
   <tbody>
-  {% for pro in hr_pro %}
+  {% for pro in company_pro %}
     <tr>
       <th scope="row">{{pro.user.id}}</th>
       <td>{{pro.user.username}}</td>
@@ -53,7 +53,7 @@
     </tr>
   </thead>
   <tbody>
-  {% for pro in hr_sales %}
+  {% for pro in company_sales %}
     <tr>
       <th scope="row">{{pro.user.id}}</th>
       <td>{{pro.user.username}}</td>
@@ -79,7 +79,7 @@
     </tr>
   </thead>
   <tbody>
-  {% for pro in hr_marketing %}
+  {% for pro in company_marketing %}
     <tr>
       <th scope="row">{{pro.user.id}}</th>
       <td>{{pro.user.username}}</td>

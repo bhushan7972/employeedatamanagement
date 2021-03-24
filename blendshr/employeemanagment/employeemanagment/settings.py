@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Inbuild bootstrap forms
+    'crispy_forms',
+    # apps
     'employee',
     'company',
     'finance',

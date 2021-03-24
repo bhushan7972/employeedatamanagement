@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from .forms import CustomUserCreationForm, profile, form, storage, message_form, msg_storage
 from .models import Profile, notifications, store, CustomUser, messages, store_msg
 from django.contrib.auth import login, authenticate
-from manager.models import managerP
-from HR.models import hrP
+from company.models import companyP
 from employee.models import employeeP
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
@@ -13,27 +12,27 @@ from django.contrib.auth.decorators import login_required
 def index(request):
 
     if request.user.is_company:
-        hr = hrP.objects.get(user=request.user)
-        if hr.is_active:
-            return redirect('hr:dashboard')    
+        company = companyP.objects.get(user=request.user)
+        if company.is_active:
+            return redirect('company:dashboard')
         else:
-            return redirect('hr:createprofile')   
+            return redirect('company:createprofile')
               
     if request.user.is_employee:
         employee = employeeP.objects.get(user=request.user)
         if employee.is_active:
             return redirect('employee:dashboard')    
         else:
-            return redirect('employee:createprofile')   
+            return redirect('employee:employeeProfile')
 
-    if request.user.is_finance:
-        manager = managerP.objects.get(user=request.user)
-        if manager.is_active:
-            return redirect('manager:dashboard')
-
-        else:
-            return redirect('manager:createprofile')    
-    
+    # if request.user.is_finance:
+    #     manager = managerP.objects.get(user=request.user)
+    #     if manager.is_active:
+    #         return redirect('manager:dashboard')
+    #
+    #     else:
+    #         return redirect('manager:createprofile')
+    #
     if request.user.is_moderator:
         moderator = Profile.objects.get(user=request.user)
         if moderator.is_active:
@@ -71,10 +70,10 @@ def signup_company(request):
             user = form.save(commit=False)
             user.is_company = True
             user.save()
-            hr = hrP.objects.create(user=user)
+            company = companyP.objects.create(user=user)
             # messages.success(request, 'Your Account has been created successfull!')
             login(request, user)
-            return redirect('hr:createprofile')
+            return redirect('company:companyProfile')
     else:
         form = CustomUserCreationForm()
 
@@ -92,7 +91,7 @@ def signup_employee(request):
             employee = employeeP.objects.create(user=user)
             # messages.success(request, 'Your Account has been created successfull!')
             login(request, user)
-            return redirect('employee:createprofile')
+            return redirect('employee:employeeProfile')
     else:
         form = CustomUserCreationForm()
 
