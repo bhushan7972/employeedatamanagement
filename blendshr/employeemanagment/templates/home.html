@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+		{% if user.is_authenticated %}
+				<a href="{% url 'logout' %}">Log Out</a></li>-->
+				<a href="{% url 'moderator:index' %}">Go to Dashboard</a></li>-->
+  		{% else %}
+				 <a href="{% url 'login' %}">Log In</a></li>
+
+
+  {% endif %}
+
+
+
+
+{% endblock %}
